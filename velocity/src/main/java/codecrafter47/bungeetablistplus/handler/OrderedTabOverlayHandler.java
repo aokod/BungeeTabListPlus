@@ -630,6 +630,13 @@ public class OrderedTabOverlayHandler implements PacketHandler, TabOverlayHandle
         @Override
         void onActivated(AbstractContentOperationModeHandler<?> previous) {
 
+            // Capture any entries from before packet listener was injected
+            for (com.velocitypowered.api.proxy.player.TabListEntry entry : player.getTabList().getEntries()) {
+                if (!CUSTOM_SLOT_UUIDS.contains(entry.getProfile().getId())) {
+                    serverPlayerListListed.putIfAbsent(entry.getProfile().getId(), true);
+                }
+            }
+
             // make all players unlisted
             if (!serverPlayerListListed.isEmpty()) {
                 List<UpsertPlayerInfoPacket.Entry> items = new ArrayList<>(serverPlayerListListed.size());

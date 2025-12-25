@@ -157,6 +157,7 @@ public class RewriteLogic extends AbstractPacketHandler {
         newItem.setDisplayName(item.getDisplayName());
         newItem.setListed(item.isListed());
         newItem.setChatSession(item.getChatSession());
+        newItem.setListOrder(item.getListOrder());
         return newItem;
     }
 }
