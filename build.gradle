@@ -46,10 +46,6 @@ subprojects {
         }
 
         maven {
-            url = 'https://papermc.io/repo/repository/maven-snapshots/'
-        }
-
-        maven {
             url = 'https://repo.papermc.io/repository/maven-public/'
         }
 
@@ -65,9 +61,6 @@ subprojects {
             url = 'https://oss.sonatype.org/content/repositories/snapshots'
         }
 
-        maven {
-            url = 'https://nexus.prgm.in/repository/maven-public/'
-        }
     }
 
     dependencies {

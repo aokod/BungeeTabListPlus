@@ -24,6 +24,8 @@ import com.velocitypowered.proxy.protocol.StateRegistry;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static com.velocitypowered.api.network.ProtocolVersion.*;
@@ -61,29 +63,49 @@ public class ReflectionUtil {
                 Constructor<?> packetMapping = StateRegistry.PacketMapping.class.getDeclaredConstructor(int.class, ProtocolVersion.class, ProtocolVersion.class, boolean.class);
                 packetMapping.setAccessible(true);
 
-                register.invoke(clientbound, Team.class, (Supplier<?>) Team::new, new StateRegistry.PacketMapping[]{
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x3E, MINECRAFT_1_8, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x41, MINECRAFT_1_9, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x43, MINECRAFT_1_12, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x44, MINECRAFT_1_12_1, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x47, MINECRAFT_1_13, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x4B, MINECRAFT_1_14, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x4C, MINECRAFT_1_15, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x55, MINECRAFT_1_17, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x58, MINECRAFT_1_19_1, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x56, MINECRAFT_1_19_3, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x5A, MINECRAFT_1_19_4, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x5C, MINECRAFT_1_20_2, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x5E, MINECRAFT_1_20_3, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x60, MINECRAFT_1_20_5, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x67, MINECRAFT_1_21_2, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x66, MINECRAFT_1_21_5, null, false),
-                        (StateRegistry.PacketMapping) packetMapping.newInstance(0x6B, MINECRAFT_1_21_9, null, false)
-                });
+                register.invoke(clientbound, Team.class, (Supplier<?>) Team::new, createTeamPacketMappings(packetMapping));
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static StateRegistry.PacketMapping[] createTeamPacketMappings(Constructor<?> packetMapping) throws Exception {
+        List<StateRegistry.PacketMapping> mappings = new ArrayList<>();
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x3E, MINECRAFT_1_8, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x41, MINECRAFT_1_9, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x43, MINECRAFT_1_12, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x44, MINECRAFT_1_12_1, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x47, MINECRAFT_1_13, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x4B, MINECRAFT_1_14, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x4C, MINECRAFT_1_15, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x55, MINECRAFT_1_17, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x58, MINECRAFT_1_19_1, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x56, MINECRAFT_1_19_3, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x5A, MINECRAFT_1_19_4, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x5C, MINECRAFT_1_20_2, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x5E, MINECRAFT_1_20_3, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x60, MINECRAFT_1_20_5, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x67, MINECRAFT_1_21_2, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x66, MINECRAFT_1_21_5, null, false));
+        mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x6B, MINECRAFT_1_21_9, null, false));
+
+        ProtocolVersion protocol26_1 = resolveProtocolVersion("MINECRAFT_26_1", "MINECRAFT_1_21_11");
+        if (protocol26_1 != null) {
+            mappings.add((StateRegistry.PacketMapping) packetMapping.newInstance(0x6D, protocol26_1, null, false));
+        }
+
+        return mappings.toArray(new StateRegistry.PacketMapping[0]);
+    }
+
+    private static ProtocolVersion resolveProtocolVersion(String... names) {
+        for (String name : names) {
+            try {
+                return ProtocolVersion.valueOf(name);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        return null;
     }
 }

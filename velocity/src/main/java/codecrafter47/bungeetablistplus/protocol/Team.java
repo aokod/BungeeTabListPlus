@@ -60,8 +60,7 @@ public class Team implements MinecraftPacket {
     private byte friendlyFire;
     private String[] players;
 
-    // TODO: placeholder until release
-    private int MINECRAFT_1_21_5 = 770;
+    private static final int MINECRAFT_1_21_5_PROTOCOL = ProtocolVersion.MINECRAFT_1_21_5.getProtocol();
 
     public Team(String name)
     {
@@ -80,8 +79,7 @@ public class Team implements MinecraftPacket {
                 suffix = ComponentHolder.read(buf, version);
             }
             friendlyFire = buf.readByte();
-            // TODO: Replace this when released
-            if (version.getProtocol() >= MINECRAFT_1_21_5) {
+            if (version.getProtocol() >= MINECRAFT_1_21_5_PROTOCOL) {
                 nameTagVisibility = NameTagVisibility.BY_ID[ProtocolUtils.readVarInt( buf )];
                 collisionRule = CollisionRule.BY_ID[ProtocolUtils.readVarInt( buf )];
             } else {
@@ -116,8 +114,7 @@ public class Team implements MinecraftPacket {
                 suffix.write(buf);
             }
             buf.writeByte(friendlyFire);
-            // TODO: Replace this when released
-            if (version.getProtocol() >= MINECRAFT_1_21_5) {
+            if (version.getProtocol() >= MINECRAFT_1_21_5_PROTOCOL) {
                 ProtocolUtils.writeVarInt(buf, nameTagVisibility.ordinal());
                 ProtocolUtils.writeVarInt(buf, collisionRule.ordinal());
             } else {
