@@ -23,8 +23,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BukkitPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
-        if (Float.parseFloat(System.getProperty("java.class.version")) < 52.0) {
-            getLogger().severe("BungeeTabListPlus requires Java 8 or above. Please download and install it!");
+        if (Float.parseFloat(System.getProperty("java.class.version")) < 65.0) {
+            getLogger().severe("BungeeTabListPlus requires Java 21 or above. Please download and install it!");
             getLogger().severe("Disabling plugin!");
             return;
         }

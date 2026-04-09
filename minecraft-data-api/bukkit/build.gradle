@@ -1,0 +1,60 @@
+/*
+ * Copyright (C) 2016 Florian Stober
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+allprojects {
+    repositories {
+        maven {
+            url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+        }
+        maven {
+            url = "https://repo.papermc.io/repository/maven-public/"
+        }
+    }
+    dependencies {
+        compileOnly (group: 'io.papermc.paper', name: 'paper-api', version: "1.21.4-R0.1-SNAPSHOT") {
+            exclude group: 'net.md-5', module: 'bungeecord-chat'
+        }
+    }
+    configurations.configureEach {
+        exclude group: 'org.bukkit', module: 'bukkit'
+        exclude group: 'org.spigotmc', module: 'spigot-api'
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+dependencies {
+    api project(":api")
+    implementation project(":minecraft")
+    implementation project(":bukkit:api")
+    implementation project(":bukkit:vault")
+    implementation project(":bukkit:vanishnopacket")
+    implementation project(":bukkit:supervanish")
+    implementation project(":bukkit:simpleclans")
+    implementation project(":bukkit:playerpoints")
+    implementation project(":bukkit:multiverse")
+    implementation project(":bukkit:factionsuuid")
+    implementation project(":bukkit:factionsuuid05")
+    implementation project(":bukkit:factions")
+    implementation project(":bukkit:essentials")
+    implementation project(":bukkit:askyblock")
+    implementation project(":bukkit:cmi")
+}

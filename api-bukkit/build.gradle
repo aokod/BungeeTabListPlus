@@ -1,6 +1,6 @@
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:${rootProject.ext.spigotVersion}"
+    compileOnly "io.papermc.paper:paper-api:${rootProject.ext.paperVersion}"
 }
 
 java {

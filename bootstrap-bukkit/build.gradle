@@ -1,11 +1,11 @@
 
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.gradleup.shadow" version "8.3.6"
 }
 
 dependencies {
     implementation project(':bukkit-plugin')
-    compileOnly "org.spigotmc:spigot-api:${rootProject.ext.spigotVersion}"
+    compileOnly "io.papermc.paper:paper-api:${rootProject.ext.paperVersion}"
 }
 
 shadowJar {

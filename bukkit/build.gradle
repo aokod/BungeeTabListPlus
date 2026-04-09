@@ -7,12 +7,15 @@ dependencies {
     implementation project(":bungeetablistplus-common")
     implementation project(":bungeetablistplus-bridge")
     api project(":bungeetablistplus-api-bukkit")
-    compileOnly "org.spigotmc:spigot-api:${rootProject.ext.spigotVersion}"
+    compileOnly "io.papermc.paper:paper-api:${rootProject.ext.paperVersion}"
     compileOnly "me.clip.placeholderapi:PlaceholderAPI:1.8.5"
 }
 
 processResources {
     filesMatching("plugin.yml") {
+        expand(project.properties)
+    }
+    filesMatching("paper-plugin.yml") {
         expand(project.properties)
     }
     filesMatching("bungee.yml") {

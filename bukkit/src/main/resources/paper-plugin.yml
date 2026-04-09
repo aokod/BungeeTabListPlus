@@ -1,0 +1,44 @@
+name: BungeeTabListPlus
+main: codecrafter47.bungeetablistplus.BukkitPlugin
+version: ${version}
+api-version: '1.21'
+authors:
+  - CodeCrafter47
+dependencies:
+  server:
+    Factions:
+      load: BEFORE
+      required: false
+    Vault:
+      load: BEFORE
+      required: false
+    VanishNoPacket:
+      load: BEFORE
+      required: false
+    SuperVanish:
+      load: BEFORE
+      required: false
+    PremiumVanish:
+      load: BEFORE
+      required: false
+    PlayerPoints:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    SimpleClans:
+      load: BEFORE
+      required: false
+    Essentials:
+      load: BEFORE
+      required: false
+    Multiverse-Core:
+      load: BEFORE
+      required: false
+    ASkyBlock:
+      load: BEFORE
+      required: false
+    CMI:
+      load: BEFORE
+      required: false

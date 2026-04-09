@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+group 'de.codecrafter47.data'
+version '1.0.2-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java-library'
+
+    def path2 = path.replace(':', '.')
+    group = project(":").group + path2.substring(0, path2.lastIndexOf('.'))
+
+    repositories {
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.34'
+        annotationProcessor 'org.projectlombok:lombok:1.18.34'
+        testCompileOnly 'org.projectlombok:lombok:1.18.34'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+        compileOnly "com.google.code.findbugs:jsr305:3.0.1"
+        testCompileOnly "com.google.code.findbugs:jsr305:3.0.1"
+        compileOnly "com.google.guava:guava:18.0"
+    }
+
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+    }
+}
